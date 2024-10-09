@@ -1,0 +1,14 @@
+# Take input from the user for three grades
+grade1 = float(input("Enter the first grade: "))
+grade2 = float(input("Enter the second grade: "))
+grade3 = float(input("Enter the third grade: "))
+
+if (grade1, grade2, grade3 <100):
+    {
+     print("this grade is not valid")
+    }
+# Calculate the average
+average = (grade1 + grade2 + grade3) / 3
+
+# Display the average
+print(f"The average of the three grades is: {average}")
