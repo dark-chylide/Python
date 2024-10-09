@@ -1,0 +1,11 @@
+# Prompt the user for two numbers
+num1, num2 = map(float, input("Enter two numbers separated by space: ").split())
+
+# Use simultaneous assignment to calculate sum, difference, product, and quotient
+sum_, diff, prod, quot = num1 + num2, num1 - num2, num1 * num2, num1 / num2
+
+# Print the results
+print(f"Sum: {sum_}")
+print(f"Difference: {diff}")
+print(f"Product: {prod}")
+print(f"Quotient: {quot}")
