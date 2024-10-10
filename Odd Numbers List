@@ -1,0 +1,5 @@
+# Create a list to store the squares of odd numbers from 1 to 20
+squares_of_odds = [i**2 for i in range(1, 21) if i % 2 != 0]
+
+# Print the list
+print(squares_of_odds)
