@@ -1,0 +1,28 @@
+MODULE
+
+def read_file(file_path):
+    """Read the content of a file and return it as a string."""
+    try:
+        with open(file_path, 'r') as file:
+            content = file.read()
+        return content
+    except FileNotFoundError:
+        raise FileNotFoundError(f"The file at {file_path} was not found.")
+    except IOError:
+        raise IOError("An error occurred while reading the file.")
+
+MAIN
+
+from file_reader import read_file
+
+def main():
+    file_path = input("Enter the path of the file to read: ")
+    try:
+        content = read_file(file_path)
+        print("File content:")
+        print(content)
+    except Exception as e:
+        print(f"Error: {e}")
+
+if __name__ == "__main__":
+    main()
