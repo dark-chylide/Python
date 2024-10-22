@@ -1,0 +1,23 @@
+#MODULE
+# sort_utils.py
+
+def sort_numbers(numbers):
+    """Sort a list of numbers in ascending order."""
+    return sorted(numbers)
+
+#MAIN
+# main.py
+
+from sort_utils import sort_numbers
+
+def main():
+    # Example list of unsorted numbers
+    unsorted_numbers = [34, 1, 23, 4, 3, 8, 21]
+    print("Original list:", unsorted_numbers)
+
+    # Sort the list using the sort_numbers function
+    sorted_numbers = sort_numbers(unsorted_numbers)
+    print("Sorted list:", sorted_numbers)
+
+if __name__ == "__main__":
+    main()
