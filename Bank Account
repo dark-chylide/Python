@@ -1,0 +1,60 @@
+#MODULE
+# bank_account.py
+
+class BankAccount:
+    """A class to represent a Bank Account."""
+
+    def __init__(self, account_holder, initial_balance=0.0):
+        """Initialize the account with an account holder's name and an initial balance."""
+        self.account_holder = account_holder
+        self.balance = initial_balance
+
+    def deposit(self, amount):
+        """Deposit a specified amount into the account."""
+        if amount <= 0:
+            print("Deposit amount must be positive.")
+            return
+        self.balance += amount
+        print(f"Deposited ${amount:.2f}. New balance is ${self.balance:.2f}.")
+
+    def withdraw(self, amount):
+        """Withdraw a specified amount from the account."""
+        if amount <= 0:
+            print("Withdrawal amount must be positive.")
+            return
+        if amount > self.balance:
+            print("Insufficient funds.")
+            return
+        self.balance -= amount
+        print(f"Withdrew ${amount:.2f}. New balance is ${self.balance:.2f}.")
+
+    def check_balance(self):
+        """Display the current account balance."""
+        print(f"Current balance: ${self.balance:.2f}")
+
+#MAIN
+# main.py
+
+from bank_account import BankAccount
+
+def main():
+    # Create a BankAccount object
+    account = BankAccount("John Doe", 100.0)
+
+    # Display the initial balance
+    account.check_balance()
+
+    # Perform a deposit
+    account.deposit(50.0)
+
+    # Perform a withdrawal
+    account.withdraw(30.0)
+
+    # Attempt to withdraw more than the current balance
+    account.withdraw(200.0)
+
+    # Check the final balance
+    account.check_balance()
+
+if __name__ == "__main__":
+    main()
