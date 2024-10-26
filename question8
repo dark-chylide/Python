@@ -1,0 +1,22 @@
+class Book:
+    def read(self):
+        raise NotImplementedError("Subclasses must implement this method")
+
+class Novel(Book):
+    def read(self):
+        print("Reading a novel... Enjoying the storyline and characters.")
+
+class Textbook(Book):
+    def read(self):
+        print("Reading a textbook... Studying the concepts and taking notes.")
+
+# Creating instances of Novel and Textbook
+novel = Novel()
+textbook = Textbook()
+
+# List of Book objects demonstrating polymorphism
+books = [novel, textbook]
+
+# Iterate through the list and call read() on each object
+for book in books:
+    book.read()
