@@ -1,0 +1,17 @@
+class Vehicle:
+    def __init__(self, make, model):
+        self.make = make
+        self.model = model
+
+class Car(Vehicle):
+    def __init__(self, make, model, number_of_doors):
+        super().__init__(make, model)
+        self.number_of_doors = number_of_doors
+
+# Example of instantiating a Car object
+my_car = Car("Toyota", "Camry", 4)
+
+# Display the attributes of the Car object
+print(f"Make: {my_car.make}")
+print(f"Model: {my_car.model}")
+print(f"Number of doors: {my_car.number_of_doors}")
