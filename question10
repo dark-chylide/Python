@@ -1,0 +1,26 @@
+def describe_vehicle(vehicle):
+    # Call the describe() method on the given vehicle object
+    vehicle.describe()
+
+# Example vehicle classes
+class Car:
+    def describe(self):
+        print("This is a car. It has four wheels and is used for personal transportation.")
+
+class Motorcycle:
+    def describe(self):
+        print("This is a motorcycle. It has two wheels and is suitable for one or two passengers.")
+
+class Truck:
+    def describe(self):
+        print("This is a truck. It is used to transport heavy goods.")
+
+# Creating instances of different vehicle types
+car = Car()
+motorcycle = Motorcycle()
+truck = Truck()
+
+# Using the describe_vehicle function to call describe() on each vehicle
+describe_vehicle(car)         # Output: This is a car. It has four wheels and is used for personal transportation.
+describe_vehicle(motorcycle)  # Output: This is a motorcycle. It has two wheels and is suitable for one or two passengers.
+describe_vehicle(truck)       # Output: This is a truck. It is used to transport heavy goods.
