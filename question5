@@ -1,0 +1,18 @@
+class Employee:
+    def work(self):
+        print("Performing general employee tasks")
+
+class Engineer(Employee):
+    def work(self):
+        print("Designing and implementing technical solutions")
+
+# Create instances of Employee and Engineer
+employee = Employee()
+engineer = Engineer()
+
+# List of Employee objects demonstrating polymorphism
+employees = [employee, engineer]
+
+# Iterate through the list and call work() on each object
+for emp in employees:
+    emp.work()
