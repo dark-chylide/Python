@@ -1,0 +1,35 @@
+class Library:
+    # Class attribute
+    library_name = "Central Library"
+
+    def __init__(self, book_title, author):
+        # Instance attributes
+        self.book_title = book_title
+        self.author = author
+
+# Creating two instances of the Library class
+book1 = Library("1984", "George Orwell")
+book2 = Library("To Kill a Mockingbird", "Harper Lee")
+
+# Accessing class attribute
+print(f"Library Name: {Library.library_name}")  # Output: Central Library
+
+# Accessing instance attributes
+print(f"Book 1 Title: {book1.book_title}, Author: {book1.author}")
+# Output: Book 1 Title: 1984, Author: George Orwell
+
+print(f"Book 2 Title: {book2.book_title}, Author: {book2.author}")
+# Output: Book 2 Title: To Kill a Mockingbird, Author: Harper Lee
+
+# Modifying the class attribute
+Library.library_name = "Downtown Library"
+print(f"Updated Library Name: {Library.library_name}")  # Output: Downtown Library
+
+# Instance attributes remain unchanged
+print(f"Book 1 Title: {book1.book_title}, Author: {book1.author}")
+# Output: Book 1 Title: 1984, Author: George Orwell
+
+# Changing an instance attribute does not affect others
+book1.book_title = "Animal Farm"
+print(f"Updated Book 1 Title: {book1.book_title}")  # Output: Animal Farm
+print(f"Book 2 Title remains: {book2.book_title}")  # Output: To Kill a Mockingbird
