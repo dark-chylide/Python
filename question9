@@ -1,0 +1,40 @@
+class Appliance:
+    def __init__(self, brand, power):
+        self.brand = brand
+        self.power = power  # in watts
+
+    def turn_on(self):
+        print(f"Turning on the {self.brand} appliance.")
+
+    def turn_off(self):
+        print(f"Turning off the {self.brand} appliance.")
+
+class WashingMachine(Appliance):
+    def __init__(self, brand, power, load_capacity):
+        super().__init__(brand, power)
+        self.load_capacity = load_capacity  # in kilograms
+
+    def start_wash_cycle(self):
+        print(f"Starting wash cycle with {self.load_capacity} kg load capacity.")
+
+class Refrigerator(Appliance):
+    def __init__(self, brand, power, temperature):
+        super().__init__(brand, power)
+        self.temperature = temperature  # in degrees Celsius
+
+    def set_temperature(self, temperature):
+        self.temperature = temperature
+        print(f"Setting refrigerator temperature to {self.temperature}°C.")
+
+# Creating instances of WashingMachine and Refrigerator
+washing_machine = WashingMachine("LG", 1500, 7)
+refrigerator = Refrigerator("Samsung", 800, 4)
+
+# Using methods from the base class and derived classes
+washing_machine.turn_on()  # Inherited from Appliance
+washing_machine.start_wash_cycle()  # Specific to WashingMachine
+washing_machine.turn_off()  # Inherited from Appliance
+
+refrigerator.turn_on()  # Inherited from Appliance
+refrigerator.set_temperature(2)  # Specific to Refrigerator
+refrigerator.turn_off()  # Inherited from Appliance
