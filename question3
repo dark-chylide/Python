@@ -1,0 +1,14 @@
+class Bird:
+    def make_sound(self):
+        print("Some generic bird sound")
+
+class Parrot(Bird):
+    def make_sound(self):
+        print("Squawk")
+
+# Example usage
+generic_bird = Bird()
+generic_bird.make_sound()  # Output: Some generic bird sound
+
+parrot = Parrot()
+parrot.make_sound()  # Output: Squawk
