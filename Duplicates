@@ -1,0 +1,7 @@
+def has_duplicates(arr):
+    # Convert the list to a set and compare its length to the original list
+    return len(arr) != len(set(arr))
+
+# Example usage:
+arr = [1, 2, 3, 4, 5, 1]
+print(has_duplicates(arr))  # Output should be True
