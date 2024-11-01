@@ -1,0 +1,14 @@
+def second_largest_unique(arr):
+    # Remove duplicates and sort the list in descending order
+    unique_sorted_arr = sorted(set(arr), reverse=True)
+
+    # Check if there are at least two unique elements
+    if len(unique_sorted_arr) < 2:
+        return "There is no second largest unique element."
+    else:
+        return unique_sorted_arr[1]
+
+
+# Example usage:
+arr = [10, 20, 4, 20, 10, 30]
+print(second_largest_unique(arr))  # Output should be 20
