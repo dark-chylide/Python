@@ -1,0 +1,10 @@
+def intersection(arr1, arr2):
+    # Convert both arrays to sets and find the intersection
+    set1 = set(arr1)
+    set2 = set(arr2)
+    return list(set1 & set2)
+
+# Example usage:
+arr1 = [1, 2, 2, 3, 4]
+arr2 = [2, 3, 5]
+print(intersection(arr1, arr2))  # Output should be [2, 3]
