@@ -1,0 +1,151 @@
+import json
+from datetime import datetime
+
+# Book Class
+class Book:
+    def __init__(self, title, author, ISBN, isAvailable=True):
+        self.title = title
+        self.author = author
+        self.ISBN = ISBN
+        self.isAvailable = isAvailable
+
+    def __repr__(self):
+        return f"Book({self.title}, {self.author}, {self.ISBN}, {'Available' if self.isAvailable else 'Borrowed'})"
+
+# Borrower Class
+class Borrower:
+    def __init__(self, borrowerID):
+        self.borrowerID = borrowerID
+        self.borrowedBooks = []  # List of tuples: (ISBN, borrow_date, return_date)
+        self.lateFees = 0.0
+
+    def __repr__(self):
+        return f"Borrower(ID: {self.borrowerID}, Borrowed: {self.borrowedBooks}, Fees: {self.lateFees})"
+
+# Library Manager Class
+class LibraryManager:
+    def __init__(self):
+        self.books = []
+        self.borrowers = []
+
+    # Add a new book
+    def add_book(self, title, author, ISBN):
+        if not is_valid_ISBN(ISBN):
+            return "Invalid ISBN format."
+        self.books.append(Book(title, author, ISBN))
+        return f"Book '{title}' added successfully."
+
+    # Remove a book by ISBN
+    def remove_book(self, ISBN):
+        for book in self.books:
+            if book.ISBN == ISBN:
+                self.books.remove(book)
+                return f"Book '{book.title}' removed successfully."
+        return "Book not found."
+
+    # Search books by a criterion
+    def search_books(self, criterion, value):
+        return [book for book in self.books if getattr(book, criterion, "").lower() == value.lower()]
+
+    # Borrow a book
+    def borrow_book(self, borrowerID, ISBN, borrow_date):
+        borrower = self.get_borrower(borrowerID)
+        book = self.get_book(ISBN)
+
+        if not borrower:
+            return "Borrower not found."
+        if not book or not book.isAvailable:
+            return "Book is unavailable."
+
+        book.isAvailable = False
+        borrower.borrowedBooks.append((ISBN, borrow_date, None))
+        return f"Book '{book.title}' borrowed by Borrower ID {borrowerID}."
+
+    # Return a book
+    def return_book(self, borrowerID, ISBN, return_date):
+        borrower = self.get_borrower(borrowerID)
+        book = self.get_book(ISBN)
+
+        if not borrower or not book:
+            return "Invalid borrower ID or book ISBN."
+
+        for record in borrower.borrowedBooks:
+            if record[0] == ISBN and record[2] is None:
+                record = (record[0], record[1], return_date)
+                borrower.borrowedBooks.remove(record)
+                borrower.borrowedBooks.append(record)
+
+                book.isAvailable = True
+                late_days = calculate_late_days(record[1], return_date)
+                if late_days > 0:
+                    borrower.lateFees += late_days * 1.0  # Assuming $1 per late day
+                return f"Book '{book.title}' returned successfully. Late fee: ${late_days * 1.0:.2f}"
+
+        return "No record of this book being borrowed by the borrower."
+
+    # Get a book by ISBN
+    def get_book(self, ISBN):
+        for book in self.books:
+            if book.ISBN == ISBN:
+                return book
+        return None
+
+    # Get a borrower by ID
+    def get_borrower(self, borrowerID):
+        for borrower in self.borrowers:
+            if borrower.borrowerID == borrowerID:
+                return borrower
+        return None
+
+    # Add a borrower
+    def add_borrower(self, borrowerID):
+        if any(b.borrowerID == borrowerID for b in self.borrowers):
+            return "Borrower ID already exists."
+        self.borrowers.append(Borrower(borrowerID))
+        return f"Borrower ID {borrowerID} added successfully."
+
+    # Save data to JSON files
+    def save_data(self, books_file, borrowers_file):
+        with open(books_file, 'w') as bf, open(borrowers_file, 'w') as brf:
+            json.dump([book.__dict__ for book in self.books], bf)
+            json.dump([borrower.__dict__ for borrower in self.borrowers], brf)
+
+    # Load data from JSON files
+    def load_data(self, books_file, borrowers_file):
+        with open(books_file, 'r') as bf, open(borrowers_file, 'r') as brf:
+            self.books = [Book(**data) for data in json.load(bf)]
+            self.borrowers = [Borrower(**data) for data in json.load(brf)]
+
+# Utility Functions
+def is_valid_ISBN(ISBN):
+    return len(ISBN) in {10, 13} and ISBN.isdigit()
+
+def format_date(date_str):
+    return datetime.strptime(date_str, '%Y-%m-%d')
+
+def calculate_late_days(borrow_date, return_date):
+    borrow_date = format_date(borrow_date)
+    return_date = format_date(return_date)
+    delta = (return_date - borrow_date).days
+    return max(0, delta - 14)  # Assuming a 2-week borrowing period
+
+# Main Program Execution (Example)
+if __name__ == "__main__":
+    library = LibraryManager()
+
+    # Adding books and borrowers
+    print(library.add_book("Book A", "Author A", "1234567890"))
+    print(library.add_book("Book B", "Author B", "0987654321"))
+    print(library.add_borrower(1))
+    print(library.add_borrower(2))
+
+    # Borrowing and returning books
+    print(library.borrow_book(1, "1234567890", "2023-11-01"))
+    print(library.return_book(1, "1234567890", "2023-11-20"))
+
+    # Searching and displaying books
+    print("Available books:", library.search_books("isAvailable", "True"))
+
+    # Save and load data
+    library.save_data("books.json", "borrowers.json")
+    library.load_data("books.json", "borrowers.json")
