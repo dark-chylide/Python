@@ -1,0 +1,128 @@
+# Inventory data
+inventory = [
+    {"id": 1, "name": "Laptop", "price": 999.99},
+    {"id": 2, "name": "Smartphone", "price": 599.99},
+    {"id": 3, "name": "Headphones", "price": 89.99},
+]
+
+# Shopping cart
+cart = {}
+
+# User credentials (for optional authentication)
+users = {"admin": "password123"}
+
+
+def display_products():
+    """Displays the available products in the store."""
+    print("\nAvailable Products:")
+    for product in inventory:
+        print(f"ID: {product['id']} | Name: {product['name']} | Price: ${product['price']:.2f}")
+
+
+def add_to_cart():
+    """Allows users to add products to their shopping cart."""
+    try:
+        product_id = int(input("Enter the product ID to add to cart: "))
+        quantity = int(input("Enter the quantity: "))
+        product = next((p for p in inventory if p['id'] == product_id), None)
+        if not product:
+            print("Invalid product ID.")
+            return
+        if product_id in cart:
+            cart[product_id]["quantity"] += quantity
+        else:
+            cart[product_id] = {"product": product, "quantity": quantity}
+        print(f"Added {quantity} x {product['name']} to your cart.")
+    except ValueError:
+        print("Please enter valid numeric inputs.")
+
+
+def view_cart():
+    """Displays the user's shopping cart."""
+    if not cart:
+        print("\nYour cart is empty.")
+        return
+    print("\nShopping Cart:")
+    total = 0
+    for item in cart.values():
+        product = item["product"]
+        quantity = item["quantity"]
+        item_total = product["price"] * quantity
+        total += item_total
+        print(f"{product['name']} | Quantity: {quantity} | Total: ${item_total:.2f}")
+    print(f"Cart Total: ${total:.2f}")
+
+
+def remove_from_cart():
+    """Allows users to remove items from their shopping cart."""
+    try:
+        product_id = int(input("Enter the product ID to remove from cart: "))
+        if product_id in cart:
+            removed_item = cart.pop(product_id)
+            print(f"Removed {removed_item['product']['name']} from your cart.")
+        else:
+            print("Product ID not found in cart.")
+    except ValueError:
+        print("Please enter a valid product ID.")
+
+
+def complete_purchase():
+    """Completes the purchase and displays the total cost."""
+    if not cart:
+        print("\nYour cart is empty. Add items before completing the purchase.")
+        return
+    total = sum(item["product"]["price"] * item["quantity"] for item in cart.values())
+    print(f"\nYour total is: ${total:.2f}")
+    confirm = input("Do you want to proceed with the purchase? (yes/no): ").strip().lower()
+    if confirm == "yes":
+        print("Purchase successful! Thank you for shopping.")
+        cart.clear()
+    else:
+        print("Purchase canceled.")
+
+
+def login():
+    """Authenticates the user."""
+    username = input("Enter username: ")
+    password = input("Enter password: ")
+    if users.get(username) == password:
+        print("Login successful!")
+        return True
+    else:
+        print("Invalid credentials.")
+        return False
+
+
+def menu():
+    """Displays the main menu and handles user actions."""
+    while True:
+        print("\nMenu:")
+        print("1. View available products")
+        print("2. Add items to cart")
+        print("3. View cart")
+        print("4. Remove items from cart")
+        print("5. Complete purchase")
+        print("6. Exit")
+        choice = input("Select an option (1-6): ").strip()
+        if choice == "1":
+            display_products()
+        elif choice == "2":
+            add_to_cart()
+        elif choice == "3":
+            view_cart()
+        elif choice == "4":
+            remove_from_cart()
+        elif choice == "5":
+            complete_purchase()
+        elif choice == "6":
+            print("Thank you for visiting! Goodbye.")
+            break
+        else:
+            print("Invalid choice. Please select a valid option.")
+
+
+# Main program
+if login():
+    menu()
+else:
+    print("Access denied. Exiting program.")
