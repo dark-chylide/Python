@@ -1,0 +1,16 @@
+def find_missing_number(numbers, n):
+    # Calculate the expected sum of numbers from 1 to n
+    expected_sum = n * (n + 1) // 2
+    # Calculate the actual sum of the numbers in the list
+    actual_sum = sum(numbers)
+    # The missing number is the difference between the expected and actual sums
+    return expected_sum - actual_sum
+
+# Example usage
+try:
+    n = int(input("Enter the value of n (the largest number): "))
+    numbers = list(map(int, input("Enter the numbers separated by spaces: ").split()))
+    missing_number = find_missing_number(numbers, n)
+    print("The missing number is:", missing_number)
+except ValueError:
+    print("Please enter valid integers.")
