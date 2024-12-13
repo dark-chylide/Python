@@ -1,0 +1,19 @@
+def count_vowels(input_string):
+    # Define the vowels
+    vowels = "aeiouAEIOU"
+    count = 0
+
+    # Loop through each character in the string
+    for char in input_string:
+        # Check if the character is a vowel
+        if char in vowels:
+            count += 1
+
+    return count
+
+# Accept input from the user
+user_input = input("Enter a string: ")
+vowel_count = count_vowels(user_input)
+
+# Display the result
+print("The number of vowels in the string is:", vowel_count)
