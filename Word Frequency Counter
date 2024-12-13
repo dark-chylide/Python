@@ -1,0 +1,23 @@
+def word_frequency(sentence):
+    # Create an empty dictionary to store word frequencies
+    frequencies = {}
+    
+    # Split the sentence into words and loop through each word
+    for word in sentence.split():
+        # Convert the word to lowercase to ensure case-insensitivity
+        word = word.lower()
+        # Update the word frequency in the dictionary
+        frequencies[word] = frequencies.get(word, 0) + 1
+    
+    return frequencies
+
+# Accept input from the user
+user_sentence = input("Enter a sentence: ")
+
+# Get the word frequencies
+frequencies = word_frequency(user_sentence)
+
+# Display the results
+print("Word frequencies:")
+for word, count in frequencies.items():
+    print(f"{word}: {count}")
